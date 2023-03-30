@@ -5,7 +5,7 @@ This repository contains a C++ implementation of a spectrogram, which is a visua
 ## Features
 To use the spectrogram implementation, you will first need to compile the program. The following dependencies are required:
 
-  + [libsnd libraty](https://github.com/libsndfile/libsndfile/releases)
+  + [libsndfile library](https://github.com/libsndfile/libsndfile/releases)
 
 To install these dependencies, follow the instructions provided by your operating system or package manager.
 
