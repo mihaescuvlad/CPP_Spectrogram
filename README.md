@@ -11,7 +11,7 @@ To install these dependencies, follow the instructions provided by your operatin
 
 ## Motivation
 
-This project was created as part of a university project in digital signal processing. The goal of the project was to implement a spectrogram algorithm in C++, which would allow us to analyze and visualize the frequency content of different audio signals. The spectrogram is a useful tool for many applications, including speech analysis, music analysis, and sound effects design.
+This project was created as part of a university project in computer graphics. The goal of the project was to implement a spectrogram algorithm in C++, which would allow us to analyze and visualize the frequency content of different audio signals. The spectrogram is a useful tool for many applications, including speech analysis, music analysis, and sound effects design.
 
 We chose to use the FFT algorithm to compute the spectrogram because of its efficiency and accuracy. The FFT algorithm is a fast and efficient way to compute the frequency content of a signal, and it is widely used in many applications, including audio processing, image processing, and scientific computing. By using the FFT algorithm, we were able to compute the spectrogram in real-time, which allowed us to analyze and visualize the frequency content of the signal as it was being played.
 
