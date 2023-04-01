@@ -11,15 +11,18 @@ class AudioFacade
 private:
 	SNDFILE* m_file{ nullptr };
 	SF_INFO m_info{};
+
+	uint64_t computeSize();
 public:
 	~AudioFacade();
 
-	void OpenFile(const std::string& file_path);
-	void CloseFile();
-	std::vector<short> ReadShort();
-	std::vector<int> ReadInt();
-	std::vector<float> ReadFloat();
-	std::vector<double> ReadDouble();
+	void openFile(const std::string& file_path);
+	void closeFile();
+
+	std::vector<short> readShort();
+	std::vector<int> readInt();
+	std::vector<float> readFloat();
+	std::vector<double> readDouble();
 
 };
 
