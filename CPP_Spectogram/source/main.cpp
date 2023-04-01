@@ -7,12 +7,14 @@
 int main()
 {
     AudioFacade audioFacade;
-    audioFacade.OpenFile(Constants::ac_buzz);
+    audioFacade.openFile(Constants::ac_buzz);
 
-    std::vector<double> frequencies = audioFacade.ReadDouble();
+    std::vector<double> frequencies = audioFacade.readDouble();
 
     for (const auto& frequency : frequencies)
         std::cout << frequency << ' ';
+
     
+
 	return 0;
 }
