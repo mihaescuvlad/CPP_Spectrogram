@@ -1,34 +1,18 @@
 #include <iostream>
 #include <vector>
-#include <sndfile.hh>
-
-const char* path = "input_data\\222677__unfa__ac-buzz-04.flac";
+#include <string>
+#include "AudioFacade.h"
+#include "Constants.h"
 
 int main()
 {
-    SNDFILE* file = nullptr;
-    SF_INFO info = {};
+    AudioFacade audioFacade;
+    audioFacade.OpenFile(Constants::ac_buzz);
 
-    file = sf_open(path, SFM_READ, &info);
-    if (!file)
-    {
-        std::cerr << "Failed to open file " << path << std::endl;
-        return 1;
-    }
+    std::vector<double> frequencies = audioFacade.ReadDouble();
 
-    if (info.channels != 1)
-    {
-        std::cerr << "Only mono audio files are supported" << std::endl;
-        return 1;
-    }
-
-    std::vector<double> audio(info.frames);
-    sf_read_double(file, audio.data(), info.frames);
-
-    for (const auto& it : audio)
-    {
-        std::cout << it << ' ';
-    }
-
+    for (const auto& frequency : frequencies)
+        std::cout << frequency << ' ';
+    
 	return 0;
 }
