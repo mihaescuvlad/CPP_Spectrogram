@@ -1,4 +1,4 @@
-# :books: C++ Spectogram :books:
+# :books: C++ Spectrogram :books:
 
 This repository contains a C++ implementation of a spectrogram, which is a visualization of the frequency content of a signal over time. The spectrogram is computed using the Fast Fourier Transform (FFT) algorithm, which is a widely used technique for analyzing and processing digital signals.
 
