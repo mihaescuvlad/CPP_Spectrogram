@@ -1,5 +1,5 @@
-#ifndef _FOURIER_ANALYZER_
-#define _FOURIER_ANALYZER_
+#ifndef FOURIER_ANALYZER
+#define FOURIER_ANALYZER
 
 #include <algorithm>
 #include <complex>
@@ -13,114 +13,119 @@
 
 namespace FourierAnalyzer
 {
-    template<typename T>
-    void computeFFT(std::vector<std::complex<T>>& result)
-    {
-        size_t containerSize = result.size();
+	template <typename T>
+	void computeFft(std::vector<std::complex<T>>& result)
+	{
+		size_t containerSize = result.size();
 
-        if (containerSize <= 1)
-            return;
+		if (containerSize <= 1)
+			return;
 
-        std::vector<std::complex<T>> even(containerSize / 2), odd(containerSize / 2);
-        for (size_t iter = 0; iter < containerSize / 2; ++iter)
-        {
-            even[iter] = result[2 * iter];
-            odd[iter] = result[2 * iter + 1];
-        }
+		std::vector<std::complex<T>> even(containerSize / 2), odd(containerSize / 2);
+		for (size_t i = 0; i < containerSize / 2; ++i)
+		{
+			even[i] = result[2 * i];
+			odd[i] = result[2 * i + 1];
+		}
 
-        computeFFT(even);
-        computeFFT(odd);
+		computeFft(even);
+		computeFft(odd);
 
-        for (size_t iter = 0; iter < containerSize / 2; ++iter) {
-            std::complex<T> t = std::polar(1.0, -2 * std::numbers::pi_v<T> *iter / containerSize) * odd[iter];
+		for (size_t i = 0; i < containerSize / 2; ++i)
+		{
+			std::complex<T> t = std::polar(
+				1.0, -2.0 * std::numbers::pi_v<T> * static_cast<T>(i) / static_cast<T>(containerSize)) * odd[i];
 
-            result[iter] = even[iter] + t;
-            result[iter + containerSize / 2] = even[iter] - t;
-        }
-    }
+			result[i] = even[i] + t;
+			result[i + containerSize / 2] = even[i] - t;
+		}
+	}
 
-    template<typename T>
-    struct transform_window
-    {
-        void operator()(T& result)
-        {
-            computeFFT(result);
-        }
-    };
+	template <typename T>
+	struct transform_window
+	{
+		void operator()(T& result)
+		{
+			computeFft(result);
+		}
+	};
 
-    template<typename Iterator, typename T>
-    struct flatten_matrix
-    {
-        std::vector<T> operator()(Iterator first, Iterator last)
-        {
-            std::vector<T> flattened;
+	template <typename Iterator, typename T>
+	struct flatten_matrix
+	{
+		std::vector<T> operator()(Iterator first, Iterator last)
+		{
+			std::vector<T> flattened;
 
-            std::for_each(first, last, [&flattened](std::vector<T>& inner) {
-                std::copy(inner.begin(), inner.end(), std::back_inserter(flattened));
-                });
+			std::for_each(first, last, [&flattened](std::vector<T>& inner)
+			{
+				std::copy(inner.begin(), inner.end(), std::back_inserter(flattened));
+			});
 
-            return flattened;
-        }
-    };
+			return flattened;
+		}
+	};
 
-    template<typename T>
-    struct compute_power_spectrum
-    {
-        std::vector<T> operator()(const std::vector<std::complex<T>>& frequencies)
-        {
-            std::vector<T> powerSpectrum(frequencies.size() / 2 + 1);
-            for (size_t iter = 0; iter <= frequencies.size() / 2; ++iter)
-            {
-                T realPart = frequencies[iter].real();
-                T imagPart = frequencies[iter].imag();
+	template <typename T>
+	struct compute_power_spectrum
+	{
+		std::vector<T> operator()(const std::vector<std::complex<T>>& frequencies)
+		{
+			std::vector<T> powerSpectrum(frequencies.size() / 2 + 1);
+			for (size_t i = 0; i <= frequencies.size() / 2; ++i)
+			{
+				T realPart = frequencies[i].real();
+				T imaginaryPart = frequencies[i].imag();
 
-                powerSpectrum[iter] = (realPart * realPart) + (imagPart * imagPart);
-            }
+				powerSpectrum[i] = (realPart * realPart) + (imaginaryPart * imaginaryPart);
+			}
 
-            return powerSpectrum;
-        }
-    };
+			return powerSpectrum;
+		}
+	};
 
-    template<typename Iterator, typename T>
-    std::vector<std::complex<T>> parallelSTFFT(Iterator first, Iterator last)
-    {
-        uint64_t const length = static_cast<uint64_t>(std::distance(first, last));
+	template <typename Iterator, typename T>
+	std::vector<std::complex<T>> parallelStfft(Iterator first, Iterator last)
+	{
+		const auto length = static_cast<uint64_t>(std::distance(first, last));
 
-        if (!length)
-            return std::vector<std::complex<T>>();
+		if (!length)
+			return std::vector<std::complex<T>>();
 
-        const uint64_t minPerThread = Constants::min_window_size;
-        const uint64_t maxThreads = (length + minPerThread - 1) / minPerThread;
+		const uint64_t minPerThread = Constants::min_window_size;
+		const uint64_t maxThreads = (length + minPerThread - 1) / minPerThread;
 
-        const uint64_t hardwareThreads = std::thread::hardware_concurrency();
-        const uint64_t numThreads = std::min(hardwareThreads != 0 ? hardwareThreads : 2, maxThreads);
+		const uint64_t hardwareThreads = std::thread::hardware_concurrency();
+		const uint64_t numThreads = std::min(hardwareThreads != 0 ? hardwareThreads : 2, maxThreads);
 
-        const uint64_t blockSize = length / numThreads;
+		const uint64_t blockSize = length / numThreads;
 
-        std::vector<std::vector<std::complex<T>>> frequencies(numThreads);
-        std::vector<std::thread> threads(numThreads - 1);
-        
-        Iterator blockStart = first;
-        for (uint64_t i = 0; i < (numThreads - 1); ++i)
-        {
-            Iterator blockEnd = blockStart;
-            std::advance(blockEnd, blockSize);
+		std::vector<std::vector<std::complex<T>>> frequencies(numThreads);
+		std::vector<std::thread> threads(numThreads - 1);
 
-            std::copy(blockStart, blockEnd, std::back_inserter(frequencies[i]));
-            threads[i] = std::thread(transform_window<std::vector<std::complex<T>>>(), std::ref(frequencies[i]));
+		Iterator blockStart = first;
+		for (uint64_t i = 0; i < (numThreads - 1); ++i)
+		{
+			Iterator blockEnd = blockStart;
+			std::advance(blockEnd, blockSize);
 
-            blockStart = blockEnd;
-        }
+			std::copy(blockStart, blockEnd, std::back_inserter(frequencies[i]));
+			threads[i] = std::thread(transform_window<std::vector<std::complex<T>>>(), std::ref(frequencies[i]));
 
-        std::copy(blockStart, last, std::back_inserter(frequencies[numThreads - 1]));
-        transform_window<std::vector<std::complex<T>>>()(frequencies[numThreads - 1]);
+			blockStart = blockEnd;
+		}
 
-        std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
+		std::copy(blockStart, last, std::back_inserter(frequencies[numThreads - 1]));
+		transform_window<std::vector<std::complex<T>>>()(frequencies[numThreads - 1]);
 
-        std::vector<std::complex<T>> results = flatten_matrix<typename std::vector<std::vector<std::complex<T>>>::iterator, std::complex<T>>()(frequencies.begin(), frequencies.end());
+		std::ranges::for_each(threads, std::mem_fn(&std::thread::join));
 
-        return results;
-    }
+		std::vector<std::complex<T>> results = flatten_matrix<
+			typename std::vector<std::vector<std::complex<T>>>::iterator, std::complex<T>>()(
+			frequencies.begin(), frequencies.end());
+
+		return results;
+	}
 };
 
 #endif

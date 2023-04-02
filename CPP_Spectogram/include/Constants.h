@@ -1,5 +1,5 @@
-#ifndef _CONSTANTS_
-#define _CONSTANTS_
+#ifndef CONSTANTS
+#define CONSTANTS
 
 #include <string>
 
@@ -12,6 +12,5 @@ public:
 	static const std::string panther_growl;
 	static const uint64_t min_window_size;
 };
-
 
 #endif
