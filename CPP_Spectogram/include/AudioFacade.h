@@ -1,9 +1,10 @@
-#ifndef _AUDIO_FACADE_
-#define _AUDIO_FACADE_
+#ifndef AUDIO_FACADE
+#define AUDIO_FACADE
 
+#include <algorithm>
 #include <complex>
+#include <ranges>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 #include <sndfile.h>
@@ -11,34 +12,43 @@
 class AudioFacade
 {
 private:
-	SNDFILE* m_file{ nullptr };
+	SNDFILE* m_file{nullptr};
 	SF_INFO m_info{};
 
-	uint64_t computeSize();
+	[[nodiscard]] uint64_t computeSize() const;
 
 public:
+	AudioFacade() = default;
 	~AudioFacade();
 
 	void openFile(const std::string& file_path);
 	void closeFile();
 
-	std::vector<short> readShort();
-	std::vector<int> readInt();
-	std::vector<float> readFloat();
-	std::vector<double> readDouble();
+	[[nodiscard]] std::vector<short> readShort() const;
+	[[nodiscard]] std::vector<int> readInt() const;
+	[[nodiscard]] std::vector<float> readFloat() const;
+	[[nodiscard]] std::vector<double> readDouble() const;
 
 	std::vector<std::complex<float>> readComplexFloat();
 	std::vector<std::complex<double>> readComplexDouble();
 
+
+	AudioFacade(const AudioFacade&) = delete;
+	AudioFacade& operator=(const AudioFacade&) = delete;
+
+	AudioFacade(AudioFacade&&) = delete;
+	AudioFacade& operator=(AudioFacade&&) = delete;
+
 private:
-	template<typename T>
+	template <typename T>
 	std::vector<std::complex<T>> makeComplex(std::vector<T> elements)
 	{
 		std::vector<std::complex<T>> complexElements;
-		for_each(elements.begin(), elements.end(), [&complexElements](const auto& currentElement) {
-			std::complex<T> temp = { currentElement, 0 };
+		std::ranges::for_each(elements, [&complexElements](const auto& currentElement)
+		{
+			std::complex<T> temp = {currentElement, 0};
 			complexElements.emplace_back(temp);
-			});
+		});
 
 		return complexElements;
 	}
