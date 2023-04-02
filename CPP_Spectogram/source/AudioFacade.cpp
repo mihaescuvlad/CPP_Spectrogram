@@ -1,6 +1,7 @@
-#include "AudioFacade.h"
-
+#include <algorithm>
 #include <iostream>
+
+#include "AudioFacade.h"
 
 AudioFacade::~AudioFacade()
 {
@@ -74,10 +75,26 @@ std::vector<float> AudioFacade::readFloat()
     return audioData;
 }
 
+std::vector<std::complex<float>> AudioFacade::readComplexFloat()
+{
+    std::vector<float> audioData = this->readFloat();
+    std::vector<std::complex<float>> complexAudioData = makeComplex<float>(audioData);
+
+    return complexAudioData;
+}
+
 std::vector<double> AudioFacade::readDouble()
 {
     std::vector<double> audioData(this->computeSize());
     sf_readf_double(m_file, audioData.data(), m_info.frames);
 
     return audioData;
+}
+
+std::vector<std::complex<double>> AudioFacade::readComplexDouble()
+{
+    std::vector<double> audioData = this->readDouble();
+    std::vector<std::complex<double>> complexAudioData = makeComplex<double>(audioData);
+
+    return complexAudioData;
 }
