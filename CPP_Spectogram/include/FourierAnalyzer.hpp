@@ -82,12 +82,12 @@ namespace FourierAnalyzer
     };
 
     template<typename Iterator, typename T>
-    std::vector<T> parallel_STFFT(Iterator first, Iterator last)
+    std::vector<std::complex<T>> parallelSTFFT(Iterator first, Iterator last)
     {
         uint64_t const length = static_cast<uint64_t>(std::distance(first, last));
 
         if (!length)
-            return std::vector<T>();
+            return std::vector<std::complex<T>>();
 
         const uint64_t minPerThread = Constants::min_window_size;
         const uint64_t maxThreads = (length + minPerThread - 1) / minPerThread;
@@ -119,7 +119,7 @@ namespace FourierAnalyzer
 
         std::vector<std::complex<T>> results = flatten_matrix<typename std::vector<std::vector<std::complex<T>>>::iterator, std::complex<T>>()(frequencies.begin(), frequencies.end());
 
-        return compute_power_spectrum<T>()(results);
+        return results;
     }
 };
 
