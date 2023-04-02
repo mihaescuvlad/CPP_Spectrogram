@@ -13,10 +13,10 @@
 
 namespace FourierAnalyzer
 {
-    template<typename Iterator, typename T>
-    void computeFFT(Iterator first, Iterator last, std::vector<std::complex<T>>& result)
+    template<typename T>
+    void computeFFT(std::vector<std::complex<T>>& result)
     {
-        size_t containerSize = std::distance(first, last);
+        size_t containerSize = result.size();
 
         if (containerSize <= 1)
             return;
@@ -28,23 +28,23 @@ namespace FourierAnalyzer
             odd[iter] = result[2 * iter + 1];
         }
 
-        computeFFT(even.begin(), even.end(), even);
-        computeFFT(odd.begin(), odd.end(), odd);
+        computeFFT(even);
+        computeFFT(odd);
 
         for (size_t iter = 0; iter < containerSize / 2; ++iter) {
-            std::complex<double> t = std::polar(1.0, -2 * std::numbers::pi_v<T> *iter / containerSize) * odd[iter];
+            std::complex<T> t = std::polar(1.0, -2 * std::numbers::pi_v<T> *iter / containerSize) * odd[iter];
 
             result[iter] = even[iter] + t;
             result[iter + containerSize / 2] = even[iter] - t;
         }
     }
 
-    template<typename Iterator, typename T>
+    template<typename T>
     struct transform_window
     {
-        void operator()(Iterator first, Iterator last, T& result)
+        void operator()(T& result)
         {
-            computeFFT(first, last, result);
+            computeFFT(result);
         }
     };
 
@@ -107,14 +107,13 @@ namespace FourierAnalyzer
             std::advance(blockEnd, blockSize);
 
             std::copy(blockStart, blockEnd, std::back_inserter(frequencies[i]));
-
-            threads[i] = std::thread(transform_window<Iterator, std::vector<std::complex<T>>>(), blockStart, blockEnd, std::ref(frequencies[i]));
+            threads[i] = std::thread(transform_window<std::vector<std::complex<T>>>(), std::ref(frequencies[i]));
 
             blockStart = blockEnd;
         }
 
         std::copy(blockStart, last, std::back_inserter(frequencies[numThreads - 1]));
-        transform_window<Iterator, std::vector<std::complex<T>>>()(blockStart, last, frequencies[numThreads - 1]);
+        transform_window<std::vector<std::complex<T>>>()(frequencies[numThreads - 1]);
 
         std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
 
