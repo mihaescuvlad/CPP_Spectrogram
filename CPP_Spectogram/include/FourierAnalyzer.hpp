@@ -97,7 +97,7 @@ namespace FourierAnalyzer
 
         const uint64_t blockSize = length / numThreads;
 
-        std::vector<std::vector<std::complex<T>>> frequencies(numThreads); // here
+        std::vector<std::vector<std::complex<T>>> frequencies(numThreads);
         std::vector<std::thread> threads(numThreads - 1);
         
         Iterator blockStart = first;
