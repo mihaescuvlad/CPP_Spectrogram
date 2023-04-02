@@ -18,11 +18,11 @@ We chose to use the FFT algorithm to compute the spectrogram because of its effi
 Our implementation of the spectrogram will be based on the following steps:
 
 <ol>
-    <li>  [X] Read in an audio file and convert it to a mono signal.</li>
-    <li>  [ ] Apply a windowing function to the signal to reduce spectral leakage.</li>
-    <li>  [X] Compute the FFT of each window of the signal to obtain the frequency content.</li>
-    <li>  [ ] Compute the magnitude spectrum of each FFT to obtain the power spectral density.</li>
-    <li>  [ ] Map the power spectral density onto a logarithmic scale to obtain the spectrogram.</li>
+    <li>Read in an audio file and convert it to a mono signal. [X]</li>
+    <li>Apply a windowing function to the signal to reduce spectral leakage. [ ]</li>
+    <li>Compute the FFT of each window of the signal to obtain the frequency content. [X]</li>
+    <li>Compute the magnitude spectrum of each FFT to obtain the power spectral density. [ ]</li>
+    <li>Map the power spectral density onto a logarithmic scale to obtain the spectrogram. [ ]</li>
 </ol>
 
 The spectrogram is visualized using a 2D colormap, where the x-axis represents time, the y-axis represents frequency, and the color represents the power spectral density. By analyzing the spectrogram, we can identify the frequency content of the signal over time, which can be useful for many applications.
