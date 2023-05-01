@@ -10,7 +10,6 @@ public:
 	static const std::string ac_buzz;
 	static const std::string frequency_variability;
 	static const std::string panther_growl;
-	static const uint64_t min_window_size;
 };
 
 #endif

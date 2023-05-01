@@ -11,15 +11,20 @@ int main()
 	AudioFacade audioFacade;
 	audioFacade.openFile(Constants::ac_buzz);
 
-	std::vector<std::complex<double>> audioFrames = audioFacade.readComplexDouble();
+	const std::vector<std::complex<double>> audioFrames = audioFacade.readComplexDouble();
+
+	std::vector<std::complex<double>> normalizedSignals = FourierAnalyzer::normalize_signals<double>()(audioFrames);
+
 	const std::vector<std::complex<double>> frequencies = FourierAnalyzer::parallelStfft<
-		std::vector<std::complex<double>>::iterator, double>(audioFrames.begin(), audioFrames.end());
+		std::vector<std::complex<double>>::iterator, double>(normalizedSignals.begin(), normalizedSignals.end());
 
-	const std::vector<double> powerSpectrum = FourierAnalyzer::compute_power_spectrum<double>()(frequencies);
+	const std::vector<double> powerSpectralDensity = FourierAnalyzer::compute_power_spectral_density<double>()(frequencies);
 
-	for (const auto& power : powerSpectrum)
+	const std::vector<double> filteredPsd = FourierAnalyzer::apply_log_filter<double>()(powerSpectralDensity);
+
+	for (const auto& result : filteredPsd)
 	{
-		std::cout << power << ' ';
+		std::cout << result << ' ';
 	}
 
 	return 0;
