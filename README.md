@@ -16,10 +16,10 @@ Our implementation of the spectrogram will be based on the following steps:
 
 <ol>
     <li>Read in an audio file and convert it to a mono signal. &#x2611;</li>
-    <li>Apply a windowing function to the signal to reduce spectral leakage. &#x2610;</li>
+    <li>Apply a windowing function to the signal to reduce spectral leakage. &#x2611;</li>
     <li>Compute the FFT of each window of the signal to obtain the frequency content. &#x2611;</li>
-    <li>Compute the magnitude spectrum of each FFT to obtain the power spectral density. &#x2610;</li>
-    <li>Map the power spectral density onto a logarithmic scale to obtain the spectrogram. &#x2610;</li>
+    <li>Compute the magnitude spectrum of each FFT to obtain the power spectral density. &#x2611;</li>
+    <li>Map the power spectral density onto a logarithmic scale to obtain the spectrogram. &#x2611;</li>
 </ol>
 
 The spectrogram will be visualized using a 2D colormap, where the x-axis represents time, the y-axis represents frequency, and the color represents the power spectral density. By analyzing the spectrogram, we can identify the frequency content of the signal over time, which can be useful for many applications.
