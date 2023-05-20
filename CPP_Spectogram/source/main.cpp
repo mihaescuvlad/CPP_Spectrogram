@@ -1,30 +1,84 @@
-#include <complex>
+﻿
 #include <iostream>
-#include <vector>
+#include <string>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 
-#include "AudioFacade.h"
-#include "Constants.h"
-#include "FourierAnalyzer.hpp"
+#include "Button.hpp"
+#include "Constants.hpp"
+#include "GuiTheme.hpp"
 
 int main()
 {
-	AudioFacade audioFacade;
-	audioFacade.openFile(Constants::ac_buzz);
+	sf::RenderWindow window(sf::VideoMode(900, 900), "Basic Spectrogram");
+	GuiTheme guiTheme;
 
-	const std::vector<std::complex<double>> audioFrames = audioFacade.readComplexDouble();
+	sf::Font defaultFont, iconFont;
+	defaultFont.loadFromFile(Constants::DEFAULT_FONT);
+	iconFont.loadFromFile("resources\\fonts\\arial-unicode-ms.ttf");
 
-	std::vector<std::complex<double>> normalizedSignals = FourierAnalyzer::normalize_signals<double>()(audioFrames);
+	char32_t Icon = U'\U0001F319';
 
-	const std::vector<std::complex<double>> frequencies = FourierAnalyzer::parallelStfft<
-		std::vector<std::complex<double>>::iterator, double>(normalizedSignals.begin(), normalizedSignals.end());
+	Button changeThemeButton(sf::String(Icon), {50, 50}, 20, guiTheme.getPButtonColor(), guiTheme.getTextColor());
+	changeThemeButton.setFont(iconFont);
+	changeThemeButton.setPosition({ static_cast<float>(window.getSize().x - 75.0), 25 });
 
-	const std::vector<double> powerSpectralDensity = FourierAnalyzer::compute_power_spectral_density<double>()(frequencies);
+	Button selectFileButton("Select File", { 125, 50 }, 20, guiTheme.getPButtonColor(), guiTheme.getTextColor());
+	selectFileButton.setFont(defaultFont);
+	selectFileButton.setPosition( { 25, 25 } );
 
-	const std::vector<double> filteredPsd = FourierAnalyzer::apply_log_filter<double>()(powerSpectralDensity);
-
-	for (const auto& result : filteredPsd)
+	while (window.isOpen())
 	{
-		std::cout << result << ' ';
+
+		sf::Event event{};
+		while (window.pollEvent(event))
+		{
+			if (changeThemeButton.isMouseOver(window))
+			{
+				changeThemeButton.setBackColor(guiTheme.getAccentColor());
+			}
+			else
+			{
+				changeThemeButton.setBackColor(guiTheme.getPButtonColor());
+			}
+
+			if (selectFileButton.isMouseOver(window))
+			{
+				selectFileButton.setBackColor(guiTheme.getAccentColor());
+			}
+			else
+			{
+				selectFileButton.setBackColor(guiTheme.getPButtonColor());
+			}
+
+			switch(event.type)
+			{
+			case sf::Event::Closed:
+				window.close();
+				break;
+			case sf::Event::MouseMoved:
+				break;
+			case sf::Event::MouseButtonPressed:
+				if (changeThemeButton.isMouseOver(window))
+				{
+					std::cout << "[Clicked] - Change_Theme\n";
+					guiTheme.SwapTheme();
+				}
+
+				if(selectFileButton.isMouseOver(window))
+				{
+					std::cout << "[Clicked] - Select_File\n";
+				}
+				break;
+			default:
+				break;
+			}
+		}
+
+		window.clear(guiTheme.getBackgroundColor());
+		selectFileButton.drawTo(window);
+		changeThemeButton.drawTo(window);
+		window.display();
 	}
 
 	return 0;

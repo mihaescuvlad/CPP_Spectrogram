@@ -45,7 +45,7 @@ void AudioFacade::closeFile()
 
 uint64_t AudioFacade::computeSize() const
 {
-	return m_info.frames * m_info.channels;
+	return static_cast<uint64_t>(m_info.frames * m_info.channels);
 }
 
 std::vector<short> AudioFacade::readShort() const

@@ -1,5 +1,5 @@
-#ifndef AUDIO_FACADE
-#define AUDIO_FACADE
+#ifndef AUDIO_FACADE_H
+#define AUDIO_FACADE_H
 
 #include <algorithm>
 #include <complex>
@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include <sndfile.h>
+#include "sndfile.h"
 
 class AudioFacade
 {

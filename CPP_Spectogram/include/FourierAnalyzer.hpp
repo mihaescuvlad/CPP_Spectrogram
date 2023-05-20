@@ -1,5 +1,5 @@
-#ifndef FOURIER_ANALYZER
-#define FOURIER_ANALYZER
+#ifndef FOURIER_ANALYZER_HPP
+#define FOURIER_ANALYZER_HPP
 
 #include <algorithm>
 #include <complex>

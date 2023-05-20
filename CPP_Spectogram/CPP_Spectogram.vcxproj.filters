@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\GUI Files">
+      <UniqueIdentifier>{f887d585-6285-4ff5-bd78-bb156a8f5a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI Files">
+      <UniqueIdentifier>{2c4cae2d-28d7-4e5a-a316-566e6a405db3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -24,15 +30,39 @@
     <ClCompile Include="source\Constants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\BasicFileManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Button.cpp">
+      <Filter>Source Files\GUI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GuiTheme.cpp">
+      <Filter>Source Files\GUI Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioFacade.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Constants.h">
+    <ClInclude Include="include\FourierAnalyzer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\FourierAnalyzer.hpp">
+    <ClInclude Include="include\BasicFileManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IFileManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Button.hpp">
+      <Filter>Header Files\GUI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GuiTheme.hpp">
+      <Filter>Header Files\GUI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileSystemNav.hpp">
+      <Filter>Header Files\GUI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Constants.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

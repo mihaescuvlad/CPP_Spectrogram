@@ -1,6 +1,17 @@
-#include "Constants.h"
+#include "Constants.hpp"
 
-const std::string Constants::resonance_50Hz						= "input_data\\559465__diicorp95__direct-50hz-resonance-clicking-loop.wav";
-const std::string Constants::ac_buzz							= "input_data\\222677__unfa__ac-buzz-04.flac";
-const std::string Constants::frequency_variability				= "input_data\\202254__iut_paris8__frequencyvariabl_robin_rimlinger_cim2014_s4.wav";
-const std::string Constants::panther_growl						= "input_data\\536331__xhwzq6gv__panther.wav";
+const std::filesystem::path Constants::DEFAULT_FILE_PATH	= "input_data";
+
+const sf::Color Constants::LIGHT_TEXT						= { 7, 7, 9 };
+const sf::Color Constants::LIGHT_BACKGROUND					= { 232, 233, 237 };
+const sf::Color Constants::LIGHT_PRIMARY_BUTTON				= { 221, 222, 228 };
+const sf::Color Constants::LIGHT_SECONDARY_BUTTON			= { 194, 178, 181 };
+const sf::Color Constants::LIGHT_ACCENT						= { 204, 206, 215 };
+
+const sf::Color Constants::DARK_TEXT						= { 252, 252, 253 };
+const sf::Color Constants::DARK_BACKGROUND					= { 16, 17, 19 };
+const sf::Color Constants::DARK_PRIMARY_BUTTON				= { 89, 95, 105 };
+const sf::Color Constants::DARK_SECONDARY_BUTTON			= { 5, 5, 6 };
+const sf::Color Constants::DARK_ACCENT						= { 130, 136, 179 };
+
+const std::string Constants::DEFAULT_FONT					= "resources\\fonts\\cambria.ttc";
