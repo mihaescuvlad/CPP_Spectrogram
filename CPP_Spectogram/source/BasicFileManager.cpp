@@ -44,6 +44,16 @@ void BasicFileManager::updateDirectory(std::filesystem::path&& fileDirectory)
 	updateFiles();
 }
 
+uint32_t BasicFileManager::getFileCountInDirectory() const
+{
+	return static_cast<uint32_t>(m_filePaths.size());
+}
+
+std::filesystem::path BasicFileManager::getCurrentDirectory() const
+{
+	return m_fileDirectory;
+}
+
 std::filesystem::path BasicFileManager::getFile(const size_t& index) const
 {
 	return m_filePaths.at(index);

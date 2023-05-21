@@ -5,22 +5,26 @@
 
 class Button
 {
-private:
+protected:
 	sf::RectangleShape m_button;
-	sf::Text m_text;
 
 public:
+	virtual ~Button() = default;
 	Button() = default;
+	
+	Button(const sf::Vector2f& size, const sf::Color& bgColor);
+	
+	virtual void setBackColor(const sf::Color& color);
+	virtual void setPosition(const sf::Vector2f& pos);
 
-	Button(const std::string& text, const sf::Vector2f& size, const unsigned& charSize, const sf::Color& bgColor, const sf::Color& textColor);
+	virtual void drawTo(sf::RenderWindow& window) const;
+	virtual bool isMouseOver(const sf::RenderWindow& window) const;
 
-	void setFont(const sf::Font& font);
-	void setBackColor(const sf::Color& color);
-	void setTextColor(const sf::Color& color);
-	void setPosition(const sf::Vector2f& pos);
+	Button(const Button&) = delete;
+	Button(Button&&) = delete;
 
-	void drawTo(sf::RenderWindow& window) const;
-	bool isMouseOver(const sf::RenderWindow& window) const;
+	Button& operator=(const Button&) = delete;
+	Button& operator=(Button&&) = delete;
 };
 
 #endif

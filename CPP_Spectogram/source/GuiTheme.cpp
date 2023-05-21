@@ -1,6 +1,6 @@
 #include "GuiTheme.hpp"
 
-GuiTheme::GuiTheme(GuiThemes theme)
+GuiTheme::GuiTheme(Themes theme)
 {
 	m_currentTheme = theme;
 	updateTheme();
@@ -15,35 +15,40 @@ void GuiTheme::updateTheme()
 	m_accent = std::get<4>(m_defaultThemes.at(m_currentTheme));
 }
 
-void GuiTheme::SwapTheme()
+void GuiTheme::swapTheme()
 {
 	unsigned themeId = (static_cast<unsigned>(m_currentTheme) + 1) % 2;
-	m_currentTheme = static_cast<GuiThemes>(themeId);
+	m_currentTheme = static_cast<Themes>(themeId);
 
 	updateTheme();
 }
 
-const sf::Color GuiTheme::getTextColor() const
+sf::Color GuiTheme::getTextColor() const
 {
 	return m_text;
 }
 
-const sf::Color GuiTheme::getBackgroundColor() const
+sf::Color GuiTheme::getBackgroundColor() const
 {
 	return m_background;
 }
 
-const sf::Color GuiTheme::getPButtonColor() const
+sf::Color GuiTheme::getPButtonColor() const
 {
 	return m_primaryButton;
 }
 
-const sf::Color GuiTheme::getSButtonColor() const
+sf::Color GuiTheme::getSButtonColor() const
 {
 	return m_secondaryButton;
 }
 
-const sf::Color GuiTheme::getAccentColor() const
+sf::Color GuiTheme::getAccentColor() const
 {
 	return m_accent;
+}
+
+GuiTheme::Themes GuiTheme::getCurrentTheme() const
+{
+	return m_currentTheme;
 }

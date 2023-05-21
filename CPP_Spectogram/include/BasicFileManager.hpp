@@ -20,6 +20,9 @@ public:
 	void updateDirectory(const std::filesystem::path& fileDirectory) override;
 	void updateDirectory(std::filesystem::path&& fileDirectory) override;
 
+	std::filesystem::path getCurrentDirectory() const override;
+	uint32_t getFileCountInDirectory() const override;
+
 	std::filesystem::path getFile(const size_t& index) const override;
 	std::filesystem::path getFile(const std::filesystem::path& filePath) const override;
 
@@ -40,7 +43,7 @@ inline std::unique_ptr<IFileManager> makeBasicFileManager(const std::filesystem:
 
 inline std::unique_ptr<IFileManager> makeBasicFileManager(std::filesystem::path&& fileDirectory)
 {
-	return std::make_unique<BasicFileManager>(std::move(fileDirectory));
+	return std::make_unique<BasicFileManager>(fileDirectory);
 }
 
 #endif

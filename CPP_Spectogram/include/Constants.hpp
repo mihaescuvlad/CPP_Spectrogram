@@ -23,6 +23,10 @@ public:
 	static const sf::Color DARK_ACCENT;
 
 	static const std::string DEFAULT_FONT;
+	static const sf::Color DEFAULT_ICON_COLOR;
+
+	static const std::string LIGHT_THEME_ICON;
+	static const std::string DARK_THEME_ICON;
 };
 
 #endif

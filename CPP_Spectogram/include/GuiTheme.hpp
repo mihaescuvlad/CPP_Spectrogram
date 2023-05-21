@@ -10,7 +10,7 @@
 class GuiTheme
 {
 public:
-	enum class GuiThemes : unsigned
+	enum class Themes : unsigned
 	{
 		LIGHT,
 		DARK,
@@ -19,27 +19,27 @@ public:
 
 private:
 	typedef std::tuple<sf::Color, sf::Color, sf::Color, sf::Color, sf::Color> themeComponents;
-	typedef std::unordered_map<GuiThemes, themeComponents> themeData;
+	typedef std::unordered_map<Themes, themeComponents> themeData;
 
 	themeData m_defaultThemes{
-		{GuiThemes::LIGHT, {
+		{Themes::LIGHT, {
 			Constants::LIGHT_TEXT,
 			Constants::LIGHT_BACKGROUND,
 			Constants::LIGHT_PRIMARY_BUTTON,
 			Constants::LIGHT_SECONDARY_BUTTON,
 			Constants::LIGHT_ACCENT
 		}},
-		{GuiThemes::DARK, {
+		{Themes::DARK, {
 			Constants::DARK_TEXT,
 			Constants::DARK_BACKGROUND,
 			Constants::DARK_PRIMARY_BUTTON,
 			Constants::DARK_SECONDARY_BUTTON,
 			Constants::DARK_ACCENT
 		}},
-		{GuiThemes::INVALID_THEME, {{},{},{},{},{}}}
+		{Themes::INVALID_THEME, {{},{},{},{},{}}}
 	};
 
-	GuiThemes m_currentTheme;
+	Themes m_currentTheme;
 
 	sf::Color m_text;
 	sf::Color m_background;
@@ -48,16 +48,17 @@ private:
 	sf::Color m_accent;
 
 public:
-	GuiTheme(GuiThemes theme = GuiThemes::LIGHT);
+	GuiTheme(Themes theme = Themes::LIGHT);
 
 	void updateTheme();
-	void SwapTheme();
+	void swapTheme();
 
-	const sf::Color getTextColor() const;
-	const sf::Color getBackgroundColor() const;
-	const sf::Color getPButtonColor() const;
-	const sf::Color getSButtonColor() const;
-	const sf::Color getAccentColor() const;
+	sf::Color getTextColor() const;
+	sf::Color getBackgroundColor() const;
+	sf::Color getPButtonColor() const;
+	sf::Color getSButtonColor() const;
+	sf::Color getAccentColor() const;
+	Themes getCurrentTheme() const;
 };
 
 #endif

@@ -19,6 +19,18 @@
     <Filter Include="Source Files\GUI Files">
       <UniqueIdentifier>{2c4cae2d-28d7-4e5a-a316-566e6a405db3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GUI Files\Buttons">
+      <UniqueIdentifier>{07af16bc-3fc4-4cf7-822c-20a4ccdf60ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI Files\Buttons">
+      <UniqueIdentifier>{e84f073d-bc96-4c6f-b016-b6712672bf3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI Files\FileNav">
+      <UniqueIdentifier>{0a14788d-05f1-417c-8982-12ea0bf08326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI Files\FileNav">
+      <UniqueIdentifier>{e85f8860-6591-4318-ac7c-d36d5dff022d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -33,11 +45,29 @@
     <ClCompile Include="source\BasicFileManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Button.cpp">
-      <Filter>Source Files\GUI Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\GuiTheme.cpp">
       <Filter>Source Files\GUI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Button.cpp">
+      <Filter>Source Files\GUI Files\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TextButton.cpp">
+      <Filter>Source Files\GUI Files\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpriteButton.cpp">
+      <Filter>Source Files\GUI Files\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ThemeManager.cpp">
+      <Filter>Source Files\GUI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FilesystemNav.cpp">
+      <Filter>Source Files\GUI Files\FileNav</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NavControls.cpp">
+      <Filter>Source Files\GUI Files\FileNav</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NavDetails.cpp">
+      <Filter>Source Files\GUI Files\FileNav</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,17 +83,32 @@
     <ClInclude Include="include\IFileManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Button.hpp">
-      <Filter>Header Files\GUI Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GuiTheme.hpp">
-      <Filter>Header Files\GUI Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\FileSystemNav.hpp">
       <Filter>Header Files\GUI Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Constants.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Button.hpp">
+      <Filter>Header Files\GUI Files\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextButton.hpp">
+      <Filter>Header Files\GUI Files\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteButton.hpp">
+      <Filter>Header Files\GUI Files\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ThemeManager.hpp">
+      <Filter>Header Files\GUI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FilesystemNav.hpp">
+      <Filter>Header Files\GUI Files\FileNav</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NavControls.hpp">
+      <Filter>Header Files\GUI Files\FileNav</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NavDetails.hpp">
+      <Filter>Header Files\GUI Files\FileNav</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -153,18 +153,29 @@
     <ClCompile Include="source\BasicFileManager.cpp" />
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\Constants.cpp" />
+    <ClCompile Include="source\FilesystemNav.cpp" />
     <ClCompile Include="source\GuiTheme.cpp" />
+    <ClCompile Include="source\NavControls.cpp" />
+    <ClCompile Include="source\NavDetails.cpp" />
+    <ClCompile Include="source\SpriteButton.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\TextButton.cpp" />
+    <ClCompile Include="source\ThemeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AudioFacade.h" />
     <ClInclude Include="include\BasicFileManager.hpp" />
     <ClInclude Include="include\Button.hpp" />
     <ClInclude Include="include\Constants.hpp" />
-    <ClInclude Include="include\FileSystemNav.hpp" />
+    <ClInclude Include="include\FilesystemNav.hpp" />
     <ClInclude Include="include\FourierAnalyzer.hpp" />
     <ClInclude Include="include\GuiTheme.hpp" />
     <ClInclude Include="include\IFileManager.hpp" />
+    <ClInclude Include="include\NavControls.hpp" />
+    <ClInclude Include="include\NavDetails.hpp" />
+    <ClInclude Include="include\SpriteButton.hpp" />
+    <ClInclude Include="include\TextButton.hpp" />
+    <ClInclude Include="include\ThemeManager.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
