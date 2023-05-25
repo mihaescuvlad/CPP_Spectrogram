@@ -2,13 +2,15 @@
 
 #include <ranges>
 
-BasicFileManager::BasicFileManager(const std::filesystem::path& fileDirectory)
+namespace stdfs = std::filesystem;
+
+BasicFileManager::BasicFileManager(const stdfs::path& fileDirectory)
 {
 	initialize(fileDirectory);
 	updateFiles();
 }
 
-BasicFileManager::BasicFileManager(std::filesystem::path&& fileDirectory)
+BasicFileManager::BasicFileManager(stdfs::path&& fileDirectory)
 {
 	initialize(std::move(fileDirectory));
 	updateFiles();
@@ -16,32 +18,49 @@ BasicFileManager::BasicFileManager(std::filesystem::path&& fileDirectory)
 
 void BasicFileManager::updateFiles() 
 {
-	if(std::filesystem::is_directory(m_fileDirectory) == false)
+	if(stdfs::is_directory(m_fileDirectory) == false)
 	{
 		return;
 	}
 
 	m_filePaths.clear();
 
-	for (const auto& file : std::filesystem::directory_iterator(m_fileDirectory)) 
+	for (const auto& file : stdfs::directory_iterator(m_fileDirectory)) 
 	{
-		if (file.is_regular_file()) 
-		{
-			m_filePaths.push_back(file.path());
-		}
+		//if (file.is_regular_file()) 
+		//{
+		//	m_filePaths.push_back(file.path());
+		//}
+
+		m_filePaths.push_back(file.path());
 	}
 }
 
-void BasicFileManager::updateDirectory(const std::filesystem::path& fileDirectory)
+void BasicFileManager::updateDirectory(const stdfs::path& fileDirectory)
 {
 	initialize(fileDirectory);
 	updateFiles();
 }
 
-void BasicFileManager::updateDirectory(std::filesystem::path&& fileDirectory)
+void BasicFileManager::updateDirectory(stdfs::path&& fileDirectory)
 {
 	initialize(std::move(fileDirectory));
 	updateFiles();
+}
+
+stdfs::path BasicFileManager::getParentForCurrentPath() const
+{
+	return m_fileDirectory.parent_path();
+}
+
+stdfs::path BasicFileManager::getCurrentDirectory() const
+{
+	return absolute(m_fileDirectory);
+}
+
+std::vector<stdfs::path> BasicFileManager::getFilesInCurrentDirectory() const
+{
+	return m_filePaths;
 }
 
 uint32_t BasicFileManager::getFileCountInDirectory() const
@@ -49,17 +68,12 @@ uint32_t BasicFileManager::getFileCountInDirectory() const
 	return static_cast<uint32_t>(m_filePaths.size());
 }
 
-std::filesystem::path BasicFileManager::getCurrentDirectory() const
-{
-	return m_fileDirectory;
-}
-
-std::filesystem::path BasicFileManager::getFile(const size_t& index) const
+stdfs::path BasicFileManager::getFile(const size_t& index) const
 {
 	return m_filePaths.at(index);
 }
 
-std::filesystem::path BasicFileManager::getFile(const std::filesystem::path& filePath) const
+stdfs::path BasicFileManager::getFile(const stdfs::path& filePath) const
 {
 	const auto searchResult = std::ranges::find_if(m_filePaths, [&filePath](const auto& item)
 	{
@@ -74,9 +88,9 @@ std::filesystem::path BasicFileManager::getFile(const std::filesystem::path& fil
 	return *searchResult;
 }
 
-void BasicFileManager::initialize(const std::filesystem::path& fileDirectory)
+void BasicFileManager::initialize(const stdfs::path& fileDirectory)
 {
-	if (!std::filesystem::is_directory(fileDirectory))
+	if (!stdfs::is_directory(fileDirectory))
 	{
 		throw(std::invalid_argument("The provided path does not lead to a valid directory."));
 	}
@@ -84,12 +98,12 @@ void BasicFileManager::initialize(const std::filesystem::path& fileDirectory)
 	m_fileDirectory = fileDirectory;
 }
 
-void BasicFileManager::initialize(std::filesystem::path&& fileDirectory)
+void BasicFileManager::initialize(stdfs::path&& fileDirectory)
 {
-	if (!std::filesystem::is_directory(fileDirectory))
+	if (!stdfs::is_directory(fileDirectory))
 	{
 		throw(std::invalid_argument("The provided path does not lead to a valid directory."));
 	}
 
-	m_fileDirectory = std::move(fileDirectory);
+	m_fileDirectory = fileDirectory;
 }

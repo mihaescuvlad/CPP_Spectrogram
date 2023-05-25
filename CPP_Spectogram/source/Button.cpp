@@ -16,6 +16,16 @@ void Button::setPosition(const sf::Vector2f& pos)
 	m_button.setPosition(pos);
 }
 
+sf::Vector2f Button::getPosition() const
+{
+	return m_button.getPosition();
+}
+
+float Button::getHeight() const
+{
+	return m_button.getGlobalBounds().height;
+}
+
 void Button::drawTo(sf::RenderWindow& window) const
 {
 	window.draw(m_button);

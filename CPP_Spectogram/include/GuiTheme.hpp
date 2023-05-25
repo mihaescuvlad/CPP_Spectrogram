@@ -18,10 +18,10 @@ public:
 	};
 
 private:
-	typedef std::tuple<sf::Color, sf::Color, sf::Color, sf::Color, sf::Color> themeComponents;
-	typedef std::unordered_map<Themes, themeComponents> themeData;
+	typedef std::tuple<sf::Color, sf::Color, sf::Color, sf::Color, sf::Color> ThemeComponents;
+	typedef std::unordered_map<Themes, ThemeComponents> ThemeData;
 
-	themeData m_defaultThemes{
+	ThemeData m_defaultThemes{
 		{Themes::LIGHT, {
 			Constants::LIGHT_TEXT,
 			Constants::LIGHT_BACKGROUND,
@@ -52,6 +52,7 @@ public:
 
 	void updateTheme();
 	void swapTheme();
+	void setTheme(Themes newTheme);
 
 	sf::Color getTextColor() const;
 	sf::Color getBackgroundColor() const;

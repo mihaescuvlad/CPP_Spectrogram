@@ -23,6 +23,13 @@ void GuiTheme::swapTheme()
 	updateTheme();
 }
 
+void GuiTheme::setTheme(Themes newTheme)
+{
+	m_currentTheme = newTheme;
+
+	updateTheme();
+}
+
 sf::Color GuiTheme::getTextColor() const
 {
 	return m_text;

@@ -41,6 +41,11 @@ void TextButton::setPosition(const sf::Vector2f& pos)
 	m_text.setPosition({ xPos, yPos });
 }
 
+std::string TextButton::getString() const
+{
+	return m_text.getString();
+}
+
 void TextButton::drawTo(sf::RenderWindow& window) const
 {
 	Button::drawTo(window);

@@ -7,6 +7,7 @@
 class BasicFileManager final : public IFileManager
 {
 private:
+
 	std::filesystem::path m_fileDirectory;
 	std::vector<std::filesystem::path> m_filePaths;
 public:
@@ -20,7 +21,9 @@ public:
 	void updateDirectory(const std::filesystem::path& fileDirectory) override;
 	void updateDirectory(std::filesystem::path&& fileDirectory) override;
 
+	std::filesystem::path getParentForCurrentPath() const override;
 	std::filesystem::path getCurrentDirectory() const override;
+	std::vector<std::filesystem::path> getFilesInCurrentDirectory() const override;
 	uint32_t getFileCountInDirectory() const override;
 
 	std::filesystem::path getFile(const size_t& index) const override;

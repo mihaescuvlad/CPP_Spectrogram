@@ -27,6 +27,12 @@ public:
 
 	static const std::string LIGHT_THEME_ICON;
 	static const std::string DARK_THEME_ICON;
+	static const std::vector<std::string> LIGHT_NAV_ICONS;
+	static const std::vector<std::string> DARK_NAV_ICONS;
+
+	static const unsigned MAX_NAV_ELEMENT_COUNT;
+	static const uint32_t MAX_CHARACTERS_PER_ROW;
+	static const uint32_t MAX_CHARACTERS_TIL_ELLIPSING;
 };
 
 #endif

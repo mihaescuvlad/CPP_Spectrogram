@@ -20,25 +20,70 @@ void NavDetails::updatePageText()
 	m_pageText.setString(displayText);
 }
 
+unsigned NavDetails::computePageCount(unsigned fileCount)
+{
+	const unsigned maxPerPage = Constants::MAX_NAV_ELEMENT_COUNT;
+	unsigned pageCount = fileCount / maxPerPage;
+
+	if(fileCount % maxPerPage != 0)
+	{
+		++pageCount;
+	}
+
+	return pageCount;
+}
+
 void NavDetails::setCurrentPath(const std::unique_ptr<IFileManager>& path)
 {
 	m_currentPath.setString(path->getCurrentDirectory().string());
 
-	const unsigned pageCount{ path->getFileCountInDirectory() };
+	const unsigned fileCount{ path->getFileCountInDirectory() + 1 };
+	const unsigned pageCount{ computePageCount(fileCount) };
 	setPageCount(pageCount);
 
-	const unsigned currentPage{ pageCount != 0 };
-	setCurrentPage(currentPage);
+	setCurrentPage(1);
+
+	updatePageText();
 }
 
 void NavDetails::setCurrentPage(unsigned page)
 {
 	m_currentPage = page;
+	updatePageText();
 }
 
 void NavDetails::setPageCount(unsigned pageCount)
 {
 	m_pageCount = pageCount;
+	updatePageText();
+}
+
+void NavDetails::incrementPage()
+{
+	if(m_currentPage < m_pageCount)
+	{
+		++m_currentPage;
+		updatePageText();
+	}
+}
+
+void NavDetails::decrementPage()
+{
+	if (m_currentPage > 1)
+	{
+		--m_currentPage;
+		updatePageText();
+	}
+}
+
+void NavDetails::setPathColor(const sf::Color& color)
+{
+	m_currentPath.setFillColor(color);
+}
+
+void NavDetails::setPageColor(const sf::Color& color)
+{
+	m_pageText.setFillColor(color);
 }
 
 void NavDetails::setPathPosition(const sf::Vector2f& pos)
@@ -59,6 +104,14 @@ unsigned NavDetails::getCurrentPage() const
 unsigned NavDetails::getPageCount() const
 {
 	return m_pageCount;
+}
+
+std::pair<size_t, size_t> NavDetails::getCurrentPageRange() const
+{
+	const size_t startPos = static_cast<size_t>(m_currentPage - 1) * Constants::MAX_NAV_ELEMENT_COUNT;
+	const size_t endPos = startPos + Constants::MAX_NAV_ELEMENT_COUNT;
+
+	return { startPos, endPos };
 }
 
 void NavDetails::drawTo(sf::RenderWindow& window) const

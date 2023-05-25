@@ -2,6 +2,7 @@
 #define FILESYSTEM_NAV_DETAILS_HPP
 
 #include <string>
+#include <ranges>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 
@@ -18,6 +19,7 @@ private:
 	unsigned m_currentPage{};
 	unsigned m_pageCount{};
 
+	static unsigned computePageCount(unsigned fileCount);
 public:
 	NavDetails(const TextNavDetailsConfig& currentPath, const TextNavDetailsConfig& pageCount);
 
@@ -25,12 +27,18 @@ public:
 	void setCurrentPath(const std::unique_ptr<IFileManager>& path);
 	void setCurrentPage(unsigned page);
 	void setPageCount(unsigned pageCount);
+	void incrementPage();
+	void decrementPage();
+
+	void setPathColor(const sf::Color& color);
+	void setPageColor(const sf::Color& color);
 
 	void setPathPosition(const sf::Vector2f& pos);
 	void setPagePosition(const sf::Vector2f& pos);
 
 	unsigned getCurrentPage() const;
 	unsigned getPageCount() const;
+	std::pair<size_t, size_t> getCurrentPageRange() const;
 
 	void drawTo(sf::RenderWindow& window) const;
 };
