@@ -33,9 +33,22 @@ unsigned NavDetails::computePageCount(unsigned fileCount)
 	return pageCount;
 }
 
+std::string NavDetails::shortenPath(const std::unique_ptr<IFileManager>&path)
+{
+	std::string shortenedPath = path->getCurrentDirectory().string();
+
+	if (shortenedPath.length() > Constants::MAX_PATH_LENGTH)
+	{
+		shortenedPath.resize(Constants::MAX_PATH_LENGTH);
+		shortenedPath += "...";
+	}
+
+	return shortenedPath;
+}
+
 void NavDetails::setCurrentPath(const std::unique_ptr<IFileManager>& path)
 {
-	m_currentPath.setString(path->getCurrentDirectory().string());
+	m_currentPath.setString(shortenPath(path));
 
 	const unsigned fileCount{ path->getFileCountInDirectory() + 1 };
 	const unsigned pageCount{ computePageCount(fileCount) };

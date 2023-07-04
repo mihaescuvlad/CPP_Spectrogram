@@ -33,6 +33,7 @@ public:
 	static const unsigned MAX_NAV_ELEMENT_COUNT;
 	static const uint32_t MAX_CHARACTERS_PER_ROW;
 	static const uint32_t MAX_CHARACTERS_TIL_ELLIPSING;
+	static const uint32_t MAX_PATH_LENGTH;
 };
 
 #endif

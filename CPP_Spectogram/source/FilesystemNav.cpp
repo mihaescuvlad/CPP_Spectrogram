@@ -32,31 +32,32 @@ void FilesystemNav::updateOptionsColorScheme()
 	}
 }
 
-void FilesystemNav::updateOptionPositions()
-{
-	const auto [startPos, endPos] = m_details.getCurrentPageRange();
-	const auto fileCount = m_options.size();
-
-	for (size_t optionIterator = startPos; optionIterator < endPos && optionIterator < fileCount; ++optionIterator)
-	{
-		if (isFirstOptionOnPage(optionIterator))
-		{
-			m_options.at(optionIterator).setPosition(m_firstOptionPosition);
-			continue;
-		}
-
-		sf::Vector2f newPosition = m_options.at(optionIterator - 1).getPosition();
-		newPosition.y += m_options.at(optionIterator - 1).getHeight() + 15;
-		m_options.at(optionIterator).setPosition(newPosition);
-	}
-}
+//void FilesystemNav::updateOptionPositions()
+//{
+//	const auto [startPos, endPos] = m_details.getCurrentPageRange();
+//	const auto fileCount = m_options.size();
+//
+//	for (size_t optionIterator = startPos; optionIterator < endPos && optionIterator < fileCount; ++optionIterator)
+//	{
+//		if (isFirstOptionOnPage(optionIterator))
+//		{
+//			m_options.at(optionIterator).setPosition(m_firstOptionPosition);
+//			continue;
+//		}
+//
+//		sf::Vector2f newPosition = m_options.at(optionIterator - 1).getPosition();
+//		newPosition.y += m_options.at(optionIterator - 1).getHeight() + 15;
+//		m_options.at(optionIterator).setPosition(newPosition);
+//	}
+//}
 
 //void FilesystemNav::updateOptionPositions()
 //{
 //	// TODO: Use std::view::enumerate when C++23 comes out
 //	const auto workingRange = getCurrentPageWorkingRange();
 //
-//	const auto firstElement = getCurrentPageWorkingRange().begin();
+//	//const auto firstElement = getCurrentPageWorkingRange().begin();
+//	const auto firstElement = std::ranges::begin(workingRange);
 //
 //	firstElement->setPosition(m_firstOptionPosition);
 //
@@ -74,6 +75,33 @@ void FilesystemNav::updateOptionPositions()
 //		previousOption = option;
 //	}
 //}
+
+void FilesystemNav::updateOptionPositions()
+{
+	// TODO: Use std::view::enumerate when C++23 comes out
+	const auto workingRange = getCurrentPageWorkingRange();
+
+	TextButton previousElement = *workingRange.begin();
+
+	bool isFirst = true;
+	for(auto& option : workingRange)
+	{
+		if(isFirst)
+		{
+			option.setPosition(m_firstOptionPosition);
+			previousElement = option;
+
+			isFirst = false;
+			continue;
+		}
+
+		sf::Vector2f newPosition = previousElement.getPosition();
+		newPosition.y += previousElement.getHeight() + 15;
+	
+		option.setPosition(newPosition);
+		previousElement = option;
+	}
+}
 
 void FilesystemNav::updateOptions()
 {
@@ -167,9 +195,9 @@ bool FilesystemNav::isFirstOptionOnPage(const size_t optionIterator) const
 	return optionIterator == firstOnPage;
 }
 
-void FilesystemNav::changePath(const std::string& newPathTermination)
+void FilesystemNav::changePath(const std::filesystem::path& newPath)
 {
-	if (newPathTermination == "..") {
+	if(newPath == "..") {
 		m_fileManager->updateDirectory(m_fileManager->getParentForCurrentPath());
 		m_details.setCurrentPath(m_fileManager);
 
@@ -181,18 +209,13 @@ void FilesystemNav::changePath(const std::string& newPathTermination)
 		return;
 	}
 
-	const std::filesystem::path newPath = m_fileManager->getCurrentDirectory().string() + '\\' + newPathTermination;
-
 	if (is_regular_file(newPath))
 	{
 		//TODO: Treat regular files
-
 	}
 	else if (is_directory(newPath))
 	{
 		m_fileManager->updateDirectory(newPath);
-
-		//TODO: Prevent the path from leaving the window
 		m_details.setCurrentPath(m_fileManager);
 	}
 }
@@ -332,27 +355,27 @@ void FilesystemNav::pressOption(const sf::RenderWindow& window)
 
 	for (size_t optionIterator = startPos; optionIterator < endPos && optionIterator < fileCount; ++optionIterator)
 	{
-		if (m_options.at(optionIterator).isMouseOver(window))
+		if (!m_options.at(optionIterator).isMouseOver(window))
 		{
-			//changePath(m_options.at(optionIterator).getString());
-			// TODO: Break into other functions to have good cohestion
-			if (m_options.at(optionIterator).getString() == "..") {
-				changePath("..");
-			}
-			else
-			{
-				std::string filePath = m_fileManager->getFile(optionIterator - 1).string();
-				filePath = getLastPart(filePath);
-				changePath(filePath);
-			}
-
-			break;
+			continue;
 		}
+
+		if (m_options.at(optionIterator).getString() == "..") 
+		{
+			changePath("..");
+		}
+		else
+		{
+			std::string filePath = m_fileManager->getFile(optionIterator - 1).string();
+			changePath(filePath);
+		}
+
 	}
 
 	updateOptions();
 	updateOptionPositions();
 }
+
 
 //void FilesystemNav::displayElementsOnPage(sf::RenderWindow& window) const
 //{

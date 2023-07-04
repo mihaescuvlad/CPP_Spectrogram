@@ -31,3 +31,4 @@ const std::vector<std::string> Constants::DARK_NAV_ICONS	= { "resources\\images\
 const unsigned Constants::MAX_NAV_ELEMENT_COUNT					= 5;
 const uint32_t Constants::MAX_CHARACTERS_PER_ROW				= 30;
 const uint32_t Constants::MAX_CHARACTERS_TIL_ELLIPSING			= 57;
+const uint32_t Constants::MAX_PATH_LENGTH						= 47;

@@ -63,7 +63,7 @@ private:
 	bool isFirstOptionOnPage(size_t optionIterator) const;
 	void updateOptionPositions();
 	void updateOptions();
-	void changePath(const std::string& newPathTermination);
+	void changePath(const std::filesystem::path& newPathTermination);
 public:
 	void updateColors();
 	void setTheme(const GuiTheme& newTheme);

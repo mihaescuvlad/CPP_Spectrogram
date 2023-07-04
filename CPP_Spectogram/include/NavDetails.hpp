@@ -20,6 +20,7 @@ private:
 	unsigned m_pageCount{};
 
 	static unsigned computePageCount(unsigned fileCount);
+	std::string shortenPath(const std::unique_ptr<IFileManager>& path);
 public:
 	NavDetails(const TextNavDetailsConfig& currentPath, const TextNavDetailsConfig& pageCount);
 
