@@ -2,13 +2,15 @@
 
 #include "Constants.hpp"
 
-TextButton::TextButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const std::string& text, const unsigned charSize, const sf::Font& font, const sf::Color& textColor)
+TextButton::TextButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const std::string& text, const unsigned charSize, const sf::Font& font, const sf::Color& textColor, const sf::Vector2f& pos)
 : Button{ buttonSize, bgColor }
 {
 	m_text.setString(text);
 	m_text.setCharacterSize(charSize);
 	m_text.setFont(font);
 	m_text.setFillColor(textColor);
+
+	setPosition(pos);
 }
 
 void TextButton::setString(const std::string& text)

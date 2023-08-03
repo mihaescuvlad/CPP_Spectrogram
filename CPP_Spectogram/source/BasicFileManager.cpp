@@ -27,11 +27,6 @@ void BasicFileManager::updateFiles()
 
 	for (const auto& file : stdfs::directory_iterator(m_fileDirectory)) 
 	{
-		//if (file.is_regular_file()) 
-		//{
-		//	m_filePaths.push_back(file.path());
-		//}
-
 		m_filePaths.push_back(file.path());
 	}
 }

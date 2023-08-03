@@ -106,7 +106,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>include;D:\Programming\_Libraries\SFML-2.5.1-Build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;F:\01 Work\04 Libraries\01 C++\01 SFML\SFML-2.6.0-PreCompiled\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/permissive- /w14640 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311  /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14826 /w14905 /w14906 /w14928 /w44365 %(AdditionalOptions)</AdditionalOptions>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -114,7 +114,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>\lib\$(IntDir);\include;D:\Programming\University\GD-Year2\CPP_Spectogram\CPP_Spectogram\lib;D:\Programming\_Libraries\SFML-2.5.1-Build\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>F:\01 Work\04 Libraries\01 C++\01 SFML\SFML-2.6.0-PreCompiled\lib;F:\01 Work\04 Libraries\01 C++\01 SFML\SFML-2.6.0-PreCompiled\bin;F:\01 Work\03 Personal Projects\CPP_Spectrogram\CPP_Spectogram\lib;F:\01 Work\03 Personal Projects\CPP_Spectrogram\CPP_Spectogram\bin;\lib\$(IntDir);\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>lib\sndfile.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -131,7 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>include;D:\Programming\_Libraries\SFML-2.5.1-Build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;F:\01 Work\04 Libraries\01 C++\01 SFML\SFML-2.6.0-PreCompiled\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/permissive- /w14640 /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311  /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14826 /w14905 /w14906 /w14928 /w44365 %(AdditionalOptions)</AdditionalOptions>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -141,7 +141,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>\lib\$(IntDir);\include;D:\Programming\University\GD-Year2\CPP_Spectogram\CPP_Spectogram\lib;D:\Programming\_Libraries\SFML-2.5.1-Build\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>F:\01 Work\04 Libraries\01 C++\01 SFML\SFML-2.6.0-PreCompiled\lib;F:\01 Work\04 Libraries\01 C++\01 SFML\SFML-2.6.0-PreCompiled\bin;F:\01 Work\03 Personal Projects\CPP_Spectrogram\CPP_Spectogram\lib;F:\01 Work\03 Personal Projects\CPP_Spectrogram\CPP_Spectogram\bin;\lib\$(IntDir);\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>lib\sndfile.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-network.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -153,10 +153,13 @@
     <ClCompile Include="source\BasicFileManager.cpp" />
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\Constants.cpp" />
+    <ClCompile Include="source\CurrentFileText.cpp" />
     <ClCompile Include="source\FilesystemNav.cpp" />
     <ClCompile Include="source\GuiTheme.cpp" />
     <ClCompile Include="source\NavControls.cpp" />
     <ClCompile Include="source\NavDetails.cpp" />
+    <ClCompile Include="source\SpriteSlider.cpp" />
+    <ClCompile Include="source\SpectrogramScreen.cpp" />
     <ClCompile Include="source\SpriteButton.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\TextButton.cpp" />
@@ -167,12 +170,15 @@
     <ClInclude Include="include\BasicFileManager.hpp" />
     <ClInclude Include="include\Button.hpp" />
     <ClInclude Include="include\Constants.hpp" />
+    <ClInclude Include="include\CurrentFileText.hpp" />
     <ClInclude Include="include\FilesystemNav.hpp" />
     <ClInclude Include="include\FourierAnalyzer.hpp" />
     <ClInclude Include="include\GuiTheme.hpp" />
     <ClInclude Include="include\IFileManager.hpp" />
     <ClInclude Include="include\NavControls.hpp" />
     <ClInclude Include="include\NavDetails.hpp" />
+    <ClInclude Include="include\SpriteSlider.hpp" />
+    <ClInclude Include="include\SpectrogramScreen.hpp" />
     <ClInclude Include="include\SpriteButton.hpp" />
     <ClInclude Include="include\TextButton.hpp" />
     <ClInclude Include="include\ThemeManager.hpp" />

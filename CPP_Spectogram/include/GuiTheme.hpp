@@ -18,7 +18,7 @@ public:
 	};
 
 private:
-	typedef std::tuple<sf::Color, sf::Color, sf::Color, sf::Color, sf::Color> ThemeComponents;
+	typedef std::tuple<sf::Color, sf::Color, sf::Color, sf::Color, sf::Color, sf::Color> ThemeComponents;
 	typedef std::unordered_map<Themes, ThemeComponents> ThemeData;
 
 	ThemeData m_defaultThemes{
@@ -27,6 +27,7 @@ private:
 			Constants::LIGHT_BACKGROUND,
 			Constants::LIGHT_PRIMARY_BUTTON,
 			Constants::LIGHT_SECONDARY_BUTTON,
+			Constants::LIGHT_SCREEN,
 			Constants::LIGHT_ACCENT
 		}},
 		{Themes::DARK, {
@@ -34,9 +35,10 @@ private:
 			Constants::DARK_BACKGROUND,
 			Constants::DARK_PRIMARY_BUTTON,
 			Constants::DARK_SECONDARY_BUTTON,
+			Constants::DARK_SCREEN,
 			Constants::DARK_ACCENT
 		}},
-		{Themes::INVALID_THEME, {{},{},{},{},{}}}
+		{Themes::INVALID_THEME, {{},{},{},{},{}, {}}}
 	};
 
 	Themes m_currentTheme;
@@ -45,6 +47,7 @@ private:
 	sf::Color m_background;
 	sf::Color m_primaryButton;
 	sf::Color m_secondaryButton;
+	sf::Color m_screen;
 	sf::Color m_accent;
 
 public:
@@ -58,6 +61,7 @@ public:
 	sf::Color getBackgroundColor() const;
 	sf::Color getPButtonColor() const;
 	sf::Color getSButtonColor() const;
+	sf::Color getScreenColor() const;
 	sf::Color getAccentColor() const;
 	Themes getCurrentTheme() const;
 };

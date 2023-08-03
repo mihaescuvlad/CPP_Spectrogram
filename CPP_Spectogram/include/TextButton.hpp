@@ -12,8 +12,7 @@ private:
 
 public:
 
-	TextButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const std::string& text, unsigned charSize, const sf::Font& font, const sf::Color& textColor);
-
+	TextButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const std::string& text, unsigned charSize, const sf::Font& font, const sf::Color& textColor, const sf::Vector2f& pos = {});
 	void setString(const std::string& text);
 	void setCharacterSize(unsigned charSize);
 	void setFont(const sf::Font& font);

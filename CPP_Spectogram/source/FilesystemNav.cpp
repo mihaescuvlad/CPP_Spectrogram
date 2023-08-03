@@ -120,7 +120,7 @@ void FilesystemNav::updateOptions()
 
 std::string FilesystemNav::getLastPart(const std::string& inputString)
 {
-	const std::size_t lastDelimiterPos = inputString.find_last_of('\\');
+	const std::size_t lastDelimiterPos = (inputString.find_last_of('\\') != std::string::npos) ? inputString.find_last_of('\\') : inputString.find_last_of('/');
 	std::string lastPart;
 
 	if (lastDelimiterPos != std::string::npos)
@@ -211,8 +211,12 @@ void FilesystemNav::changePath(const std::filesystem::path& newPath)
 
 	if (is_regular_file(newPath))
 	{
-		//TODO: Treat regular files
-	}
+		if (!newPath.has_extension() || Constants::SUPPORTED_FILE_EXTENSIONS.count(newPath.extension().string()) <= 0) return;
+
+		m_spectrogram.setFilePath(newPath);
+    m_currentFileText.setString(getLastPart(newPath.string()));
+    m_displayNav = false;
+  }
 	else if (is_directory(newPath))
 	{
 		m_fileManager->updateDirectory(newPath);

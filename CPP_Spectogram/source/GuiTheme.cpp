@@ -12,7 +12,8 @@ void GuiTheme::updateTheme()
 	m_background = std::get<1>(m_defaultThemes.at(m_currentTheme));
 	m_primaryButton = std::get<2>(m_defaultThemes.at(m_currentTheme));
 	m_secondaryButton = std::get<3>(m_defaultThemes.at(m_currentTheme));
-	m_accent = std::get<4>(m_defaultThemes.at(m_currentTheme));
+	m_screen = std::get<4>(m_defaultThemes.at(m_currentTheme));
+	m_accent = std::get<5>(m_defaultThemes.at(m_currentTheme));
 }
 
 void GuiTheme::swapTheme()
@@ -48,6 +49,11 @@ sf::Color GuiTheme::getPButtonColor() const
 sf::Color GuiTheme::getSButtonColor() const
 {
 	return m_secondaryButton;
+}
+
+sf::Color GuiTheme::getScreenColor() const
+{
+	return m_screen;
 }
 
 sf::Color GuiTheme::getAccentColor() const

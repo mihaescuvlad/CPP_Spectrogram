@@ -1,9 +1,11 @@
 #include "Button.hpp"
 
-Button::Button(const sf::Vector2f& size, const sf::Color& bgColor)
+Button::Button(const sf::Vector2f& size, const sf::Color& bgColor, const sf::Vector2f& pos)
 {
 	m_button.setSize(size);
 	m_button.setFillColor(bgColor);
+
+  Button::setPosition(pos);
 }
 
 void Button::setBackColor(const sf::Color& color)

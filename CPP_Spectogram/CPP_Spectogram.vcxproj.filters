@@ -31,6 +31,18 @@
     <Filter Include="Source Files\GUI Files\FileNav">
       <UniqueIdentifier>{e85f8860-6591-4318-ac7c-d36d5dff022d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GUI Files\SpectrogramView">
+      <UniqueIdentifier>{c386f60b-a460-4f3a-82e1-0a543bc028a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI Files\SpectrogramView">
+      <UniqueIdentifier>{29faf27f-b431-4051-b6c8-50bae3403990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI Files\Slider">
+      <UniqueIdentifier>{4e66b31f-8a15-46a2-bd88-493753bc6c22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI Files\Slider">
+      <UniqueIdentifier>{005a06ad-9f0b-4267-a8a6-ab4d7fb189c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -68,6 +80,15 @@
     </ClCompile>
     <ClCompile Include="source\NavDetails.cpp">
       <Filter>Source Files\GUI Files\FileNav</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CurrentFileText.cpp">
+      <Filter>Source Files\GUI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpectrogramScreen.cpp">
+      <Filter>Source Files\GUI Files\SpectrogramView</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpriteSlider.cpp">
+      <Filter>Source Files\GUI Files\Slider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +130,15 @@
     </ClInclude>
     <ClInclude Include="include\NavDetails.hpp">
       <Filter>Header Files\GUI Files\FileNav</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CurrentFileText.hpp">
+      <Filter>Header Files\GUI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpectrogramScreen.hpp">
+      <Filter>Header Files\GUI Files\SpectrogramView</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteSlider.hpp">
+      <Filter>Header Files\GUI Files\Slider</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

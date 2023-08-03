@@ -6,9 +6,9 @@
 class ThemeManager {
 private:
 	std::unordered_map<GuiTheme::Themes, std::string> m_themeIcons{
-		{GuiTheme::Themes::LIGHT, Constants::LIGHT_THEME_ICON },
-		{GuiTheme::Themes::DARK, Constants::DARK_THEME_ICON },
-		{GuiTheme::Themes::INVALID_THEME, {} }
+		{	GuiTheme::Themes::LIGHT, Constants::LIGHT_THEME_ICON },
+		{	GuiTheme::Themes::DARK, Constants::DARK_THEME_ICON },
+		{	GuiTheme::Themes::INVALID_THEME, {} }
 	};
 
 	sf::Vector2f m_position;
@@ -28,6 +28,7 @@ public:
 	sf::Color getBackgroundColor() const;
 	sf::Color getPButtonColor() const;
 	sf::Color getSButtonColor() const;
+	sf::Color getScreenColor() const;
 	sf::Color getAccentColor() const;
 	GuiTheme::Themes getCurrentTheme() const;
 

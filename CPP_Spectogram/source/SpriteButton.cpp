@@ -1,10 +1,12 @@
 #include "SpriteButton.hpp"
 
-SpriteButton::SpriteButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const sf::Texture& texture, const sf::Color& spriteColor)
+SpriteButton::SpriteButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const sf::Texture& texture, const sf::Color& spriteColor, const sf::Vector2f& pos)
 	: Button{buttonSize, bgColor}
 {
 	m_sprite.setTexture(texture);
 	m_sprite.setColor(spriteColor);
+
+	setPosition(pos);
 }
 
 void SpriteButton::setSpriteTexture(const sf::Texture& texture)

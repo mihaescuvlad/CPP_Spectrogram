@@ -8,6 +8,8 @@
 #include "NavDetails.hpp"
 #include "SpriteButton.hpp"
 #include "TextButton.hpp"
+#include "CurrentFileText.hpp"
+#include "SpectrogramScreen.hpp"
 
 class FilesystemNav
 {
@@ -16,6 +18,9 @@ private:
 
 	sf::RectangleShape m_tab;
 	std::unique_ptr<IFileManager> m_fileManager;
+	CurrentFileText& m_currentFileText;
+	SpectrogramScreen& m_spectrogram;
+	bool& m_displayNav;
 
 	const sf::Vector2f m_firstOptionPosition;
 	std::vector<TextButton> m_options;
@@ -85,29 +90,15 @@ public:
 	void displayElementsOnPage(sf::RenderWindow& window) const;
 	void drawTo(sf::RenderWindow& window) const;
 
-	//template<typename F>
-	//	requires std::is_invocable_r_v<std::unique_ptr<IFileManager>, F>
-	//FilesystemNav(F&& fileManagerBuilder, const sf::Vector2f& size, const sf::Color& bgColor, const sf::Vector2f& pos,
-	//	const SpriteButtonConfig& nextPageButton, const SpriteButtonConfig& prevPageButton, const SpriteButtonConfig& closeTabButton,
-	//	const NavDetailsConfig& navDetails)
-	//	: m_details{ navDetails.m_current_path, navDetails.m_page_count }, m_controls{ nextPageButton, prevPageButton, closeTabButton }
-	//{
-	//	m_fileManager = std::invoke(std::forward<F>(fileManagerBuilder));
-	//	m_details.setCurrentPath(m_fileManager);
-	//
-	//	m_tab.setSize(size);
-	//	m_tab.setFillColor(bgColor);
-	//	m_tab.setPosition(pos);
-	//}
-
 	template<typename F>
 		requires std::is_invocable_r_v<std::unique_ptr<IFileManager>, F>
 	FilesystemNav(F&& fileManagerBuilder, const GuiTheme& theme, const sf::Vector2f& size, const sf::Vector2f& pos,
 		const SpriteButtonConfig& nextPageButton, const SpriteButtonConfig& prevPageButton, const SpriteButtonConfig& closeTabButton,
-		const NavDetailsConfig& navDetails, const TextButtonConfig& optionConfig, const sf::Vector2f& firstOptionPosition)
+		const NavDetailsConfig& navDetails, const TextButtonConfig& optionConfig, const sf::Vector2f& firstOptionPosition, CurrentFileText& currentFileText, SpectrogramScreen& spectrogram, bool& displayNav)
 		:	m_firstOptionPosition{ firstOptionPosition },
 			m_details{ navDetails.m_current_path, navDetails.m_page_count },
-			m_controls{ nextPageButton, prevPageButton, closeTabButton }, m_optionConfig{ optionConfig }
+			m_controls{ nextPageButton, prevPageButton, closeTabButton }, m_optionConfig{ optionConfig },
+		m_currentFileText{ currentFileText }, m_spectrogram{spectrogram}, m_displayNav{ displayNav }
 	{
 		m_fileManager = std::invoke(std::forward<F>(fileManagerBuilder));
 		m_fileManager->updateDirectory(m_fileManager->getCurrentDirectory());

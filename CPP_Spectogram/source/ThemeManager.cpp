@@ -44,6 +44,11 @@ sf::Color ThemeManager::getSButtonColor() const
 	return m_guiTheme.getSButtonColor();
 }
 
+sf::Color ThemeManager::getScreenColor() const
+{
+	return m_guiTheme.getScreenColor();
+}
+
 sf::Color ThemeManager::getAccentColor() const
 {
 	return m_guiTheme.getAccentColor();

@@ -12,7 +12,9 @@
 #include "SpriteButton.hpp"
 #include "TextButton.hpp"
 #include "ThemeManager.hpp"
-
+#include "CurrentFileText.hpp"
+#include "SpectrogramScreen.hpp"
+#include "SpriteSlider.hpp"
 
 int main()
 {
@@ -21,13 +23,23 @@ int main()
 	ThemeManager themeManager({ static_cast<float>(window.getSize().x - 75.0), 25 });
 
 	sf::Font defaultFont;
-
-
 	defaultFont.loadFromFile(Constants::DEFAULT_FONT);
 
+	CurrentFileText workingFile(20, defaultFont, themeManager.getTextColor(), { 25.0, static_cast<float>(window.getSize().y - 50.0) });
+
+	sf::Texture playPauseIcon;
+	playPauseIcon.loadFromFile(Constants::LIGHT_THEME_ICON);
+
+	sf::Texture slTest1;
+	slTest1.loadFromFile(Constants::LIGHT_PLAYER_ICONS[2]);
+	sf::Texture slTest2;
+	slTest2.loadFromFile(Constants::LIGHT_PLAYER_ICONS[3]);
+	SpriteSliderConfig volumeSliderConfig{ {200, 50}, slTest1, slTest2, {500, 500} };
+	SpectrogramScreen spectrogramScreen{ {static_cast<float>(window.getSize().x) - 100.0f, static_cast<float>(window.getSize().y) - 200.0f}, {50, 100}, 45, defaultFont, {{50,50}, {}, {}}, volumeSliderConfig, themeManager };
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	const sf::Vector2f size{ 500, 600 };
-	const sf::Vector2f pos{ 262, 100 };
+	bool displayNav = false;
+	const sf::Vector2f navSize{ 500, 600 };
+	const sf::Vector2f navPos{ 262, 100 };
 
 	sf::Texture nextPageButtonIcon;
 	nextPageButtonIcon.loadFromFile(Constants::LIGHT_THEME_ICON);
@@ -38,25 +50,23 @@ int main()
 	const SpriteButtonConfig prevPageButton{ {50,50}, themeManager.getPButtonColor(), prevPageButtonIcon };
 
 	sf::Texture closeTabIcon;
-	closeTabIcon.loadFromFile(Constants::DARK_THEME_ICON);
+	closeTabIcon.loadFromFile(Constants::LIGHT_THEME_ICON);
 	const SpriteButtonConfig closeTab{ {50,50}, themeManager.getPButtonColor(), closeTabIcon };
 
 	const NavDetailsConfig navDetails{ {{}, 15, defaultFont, Constants::LIGHT_TEXT}, { {}, 20, defaultFont, Constants::LIGHT_TEXT} };
 
-	//FilesystemNav testObj{ [] { return makeBasicFileManager(); }, size, bgColor, pos, nextPageButton, prevPageButton, closeTab, navDetails };
+	const TextButtonConfig optionConfig{ {449, 70}, {}, {}, 20, defaultFont, {}};
 
-	const TextButtonConfig optionConfig{ {449, 70}, {}, {}, 20, {defaultFont}, {}};
+	FilesystemNav fileNav{ [] { return makeBasicFileManager(); }, themeManager.getCurrentTheme(), navSize, navPos,
+	  nextPageButton, prevPageButton, closeTab,
+	  navDetails, optionConfig, {290, 195},
+	  workingFile, spectrogramScreen, displayNav};
 
-	FilesystemNav testObj{ [] { return makeBasicFileManager(); }, themeManager.getCurrentTheme(), size, pos, nextPageButton, prevPageButton, closeTab, navDetails, optionConfig, {290, 195} };
-	//{362, 625}
-	//{612, 625}
-	testObj.setControlsPosition({ 612, 625 }, { 362, 625 }, {689, 125});
-	testObj.setDetailsPosition({292, 140 }, {492, 635});
-	bool displayNav = false;
+	fileNav.setControlsPosition({ 612, 625 }, { 362, 625 }, {689, 125});
+	fileNav.setDetailsPosition({292, 140 }, {492, 635});
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	TextButton selectFileButton({ 125, 50 }, themeManager.getPButtonColor(), "Select File", 20, defaultFont, themeManager.getTextColor());
-	selectFileButton.setPosition({ 25, 25 });
+	TextButton selectFileButton({ 125, 50 }, themeManager.getPButtonColor(), "Select File", 20, defaultFont, themeManager.getTextColor(), { 25, 25 });
 
 	while (window.isOpen())
 	{
@@ -76,12 +86,13 @@ int main()
 
 			if (displayNav)
 			{
-				if (testObj.isMouseOverNextPage(window)){}
-				if (testObj.isMouseOverPrevPage(window)){}
-				if (testObj.isMouseOverCloseTab(window)){}
-				if (testObj.isMouseOverOption(window)){}
+				if (fileNav.isMouseOverNextPage(window)){}
+				if (fileNav.isMouseOverPrevPage(window)){}
+				if (fileNav.isMouseOverCloseTab(window)){}
+				if (fileNav.isMouseOverOption(window)){}
 			}
 
+			spectrogramScreen.handleEvent(window, event);
 			switch(event.type)
 			{
 			case sf::Event::Closed:
@@ -90,15 +101,18 @@ int main()
 			case sf::Event::MouseMoved:
 				break;
 			case sf::Event::MouseButtonPressed:
+				if (event.mouseButton.button == sf::Mouse::Right) break;
+
 				if(themeManager.isMouseOver(window))
 				{
 std::cerr << "Log: [Clicked] - Swap_Theme\n";
 					themeManager.swapTheme();
 
 					selectFileButton.setTextColor(themeManager.getTextColor());
-					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					testObj.setTheme(themeManager.getCurrentTheme());
-					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					workingFile.setTextColor(themeManager.getTextColor());
+
+					fileNav.setTheme(themeManager.getCurrentTheme());
+					spectrogramScreen.updateTheme();
 				}
 
 				if(selectFileButton.isMouseOver(window))
@@ -107,36 +121,33 @@ std::cerr << "Log: [Clicked] - Select_File\n";
 					displayNav = true;
 				}
 
-				//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				if(displayNav)
 				{
-					if(testObj.isMouseOverNextPage(window))
+					if(fileNav.isMouseOverNextPage(window))
 					{
 std::cerr << "Log: [Clicked] - Next_Page\n";
-						testObj.pressNextPage();
+						fileNav.pressNextPage();
 					}
 
-					if(testObj.isMouseOverPrevPage(window))
+					if(fileNav.isMouseOverPrevPage(window))
 					{
 std::cerr << "Log: [Clicked] - Previous_Page\n";
-						testObj.pressPrevPage();
+						fileNav.pressPrevPage();
 					}
 
-					if (testObj.isMouseOverCloseTab(window)) 
+					if (fileNav.isMouseOverCloseTab(window)) 
 					{
 std::cerr << "Log: [Clicked] - Close_Tab\n";
 						displayNav = false;
-						testObj.pressCloseTab();
+						fileNav.pressCloseTab();
 					}
 
-					if (testObj.isMouseOverOption(window))
+					if (fileNav.isMouseOverOption(window))
 					{
 std::cerr << "Log: [Clicked] - Option\n";
-						testObj.pressOption(window);
+						fileNav.pressOption(window);
 					}
 				}
-
-				//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				break;
 			default:
 				break;
@@ -145,14 +156,15 @@ std::cerr << "Log: [Clicked] - Option\n";
 
 		window.clear(themeManager.getBackgroundColor());
 		selectFileButton.drawTo(window);
+		workingFile.drawTo(window);
 		themeManager.drawTo(window);
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		spectrogramScreen.drawTo(window);
 
-		if (displayNav) {
-			testObj.drawTo(window);
+		if (displayNav) 
+		{
+			fileNav.drawTo(window);
 		}
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		window.display();
 	}
 

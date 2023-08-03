@@ -14,7 +14,7 @@ private:
 
 public:
 
-	SpriteButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const sf::Texture& texture, const sf::Color& spriteColor = Constants::DEFAULT_ICON_COLOR);
+	SpriteButton(const sf::Vector2f& buttonSize, const sf::Color& bgColor, const sf::Texture& texture, const sf::Color& spriteColor = Constants::DEFAULT_ICON_COLOR, const sf::Vector2f& pos = {});
 
 	void setSpriteTexture(const sf::Texture& texture);
 	void setSpriteColor(const sf::Color& color);
@@ -24,10 +24,10 @@ public:
 };
 
 struct SpriteButtonConfig {
-	const sf::Vector2f& m_size;
-	const sf::Color& m_bg_color;
-	const sf::Texture& m_texture;
-	const sf::Color& m_sprite_color = Constants::DEFAULT_ICON_COLOR;
+	sf::Vector2f m_size;
+	sf::Color m_bg_color;
+	sf::Texture m_texture;
+	sf::Color m_sprite_color = Constants::DEFAULT_ICON_COLOR;
 };
 
 #endif
